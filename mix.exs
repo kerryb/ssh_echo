@@ -6,6 +6,8 @@ defmodule SSHEcho.Mixfile do
       app: :ssh_echo,
       version: "0.1.0",
       elixir: "~> 1.4",
+      description: "Simple echo server for testing SSH clients",
+      package: package(),
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps(),
@@ -40,5 +42,13 @@ defmodule SSHEcho.Mixfile do
       "coveralls.post": :test,
       "coveralls.html": :test,
      ]
+  end
+
+  defp package do
+    [
+      maintainers: ["Kerry Buckley"],
+      licenses: ["MIT"],
+      source_url: "https://github.com/kerryb/ssh_echo",
+    ]
   end
 end
