@@ -5,6 +5,7 @@ defmodule SSHEcho.Mixfile do
     [
       app: :ssh_echo,
       version: "0.1.0",
+      source_url: "https://github.com/kerryb/ssh_echo",
       elixir: "~> 1.4",
       description: "Simple echo server for testing SSH clients",
       package: package(),
@@ -48,7 +49,7 @@ defmodule SSHEcho.Mixfile do
     [
       maintainers: ["Kerry Buckley"],
       licenses: ["MIT"],
-      source_url: "https://github.com/kerryb/ssh_echo",
+      links: %{"GitHub" => "https://github.com/kerryb/ssh_echo"},
     ]
   end
 end
