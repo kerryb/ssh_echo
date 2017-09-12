@@ -12,7 +12,7 @@ defmodule SSHEcho.Daemon do
                 ssh_cli: {SSHEcho.CLI, []})
   end
 
-  def stop(daemon) do
-    :ssh.stop_daemon daemon
+  def stop(daemon_ref) do
+    :ok = :ssh.stop_daemon daemon_ref
   end
 end

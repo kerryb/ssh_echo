@@ -11,13 +11,21 @@ defmodule SSHEcho.Controller do
   end
 
   def start_daemon(port, username, password) do
-    {:ok, pid} = Daemon.start port, username, password
-    Agent.update __MODULE__, fn daemons -> Map.put daemons, port, pid end
+    {:ok, daemon_ref} = Daemon.start port, username, password
+    Agent.update __MODULE__, fn daemons -> Map.put daemons, port, daemon_ref end
   end
 
   def stop_daemon(port) do
     __MODULE__
-    |> Agent.get(fn daemons -> Map.get daemons, port end)
+    |> Agent.get_and_update(fn daemons ->
+      {Map.get(daemons, port), Map.delete(daemons, port)}
+    end)
     |> Daemon.stop
+  end
+
+  def stop_daemons do
+    __MODULE__
+    |> Agent.get_and_update(fn daemons -> {Map.values(daemons), %{}} end)
+    |> Enum.map(&Daemon.stop/1)
   end
 end
