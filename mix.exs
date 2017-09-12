@@ -15,7 +15,7 @@ defmodule SSHEcho.Mixfile do
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: preferred_cli_env(),
       docs: [
-        main: "README",
+        main: "readme",
         extras: ~w(README.md)
       ],
    ]
