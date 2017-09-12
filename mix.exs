@@ -4,7 +4,7 @@ defmodule SSHEcho.Mixfile do
   def project do
     [
       app: :ssh_echo,
-      version: "0.1.0",
+      version: "0.2.0",
       source_url: "https://github.com/kerryb/ssh_echo",
       elixir: "~> 1.4",
       description: "Simple echo server for testing SSH clients",
