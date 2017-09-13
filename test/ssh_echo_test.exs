@@ -41,4 +41,15 @@ defmodule SSHEchoTest do
                   SSHEx.connect(ip: 'localhost', port: 10_003,
                                 user: "test", password: "secret"))
   end
+
+  test "allows command handler to be overridden" do
+    SSHEcho.start_daemon 10_004, "test", "secret", &("Hello #{&1}")
+    {:ok, conn} = SSHEx.connect(ip: 'localhost', port: 10_004,
+                                user: "test", password: "secret")
+    response = conn
+               |> SSHEx.stream("World")
+               |> Enum.map(fn {:stdout, data} -> data end)
+               |> Enum.join
+    assert response == "Hello World"
+  end
 end

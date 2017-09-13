@@ -20,6 +20,20 @@ Then to stop the daemon:
 
     iex> SSHEcho.stop_daemon 55555
 
+### Custom message handlers
+
+The default echo behaviour can be overridden:
+
+    iex> SSHEcho.start_daemon 55555, "fred", "secret", &String.upcase/1
+    :ok
+
+    $ ssh -p 55555 fred@localhost hello
+    SSH server
+    Enter password for "fred"
+    password:
+    HELLO
+    $
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed

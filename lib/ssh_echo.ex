@@ -7,9 +7,16 @@ defmodule SSHEcho do
   @doc """
   Start a daemon listening on the specified port, authenticated by the supplied
   username and password.
+
+  Optionally, a handler for received messages can also be provided. This must
+  be a function that takes and returns a string, eg:
+
+      SSHEcho.start_daemon 12345, "foo", "bar", fn(m) -> "I received " <> m end
+
+  If no handler is supplied, the received message will simply be echoed back.
   """
-  def start_daemon(port, username, password) do
-    Controller.start_daemon port, username, password
+  def start_daemon(port, username, password, handler\\&(&1)) do
+    Controller.start_daemon port, username, password, handler
   end
 
   @doc """
