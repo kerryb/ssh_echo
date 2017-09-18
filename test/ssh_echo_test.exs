@@ -9,7 +9,7 @@ defmodule SSHEchoTest do
 
   test "echoes (non-interactive) commands sent to it" do
     SSHEcho.start_daemon 10_001, "test", "secret"
-    {:ok, conn} = SSHEx.connect(ip: 'localhost', port: 10_001,
+    {:ok, conn} = SSHEx.connect(ip: "127.0.0.1", port: 10_001,
                                 user: "test", password: "secret")
     response = conn
                |> SSHEx.stream("test command\nwith multiple lines")
@@ -23,28 +23,28 @@ defmodule SSHEchoTest do
     SSHEcho.start_daemon 10_003, "test", "secret"
     SSHEcho.stop_daemon 10_003
     assert match?({:ok, _},
-                  SSHEx.connect(ip: 'localhost', port: 10_002,
+                  SSHEx.connect(ip: "127.0.0.1", port: 10_002,
                                 user: "test", password: "secret"))
     assert match?({:error, :econnrefused},
-                  SSHEx.connect(ip: 'localhost', port: 10_003,
+                  SSHEx.connect(ip: "127.0.0.1", port: 10_003,
                                 user: "test", password: "secret"))
   end
 
   test "allows all daemons to be stopped at once" do
-    SSHEcho.start_daemon 10_002, "test", "secret"
-    SSHEcho.start_daemon 10_003, "test", "secret"
+    SSHEcho.start_daemon 10_004, "test", "secret"
+    SSHEcho.start_daemon 10_005, "test", "secret"
     SSHEcho.stop_daemons
     assert match?({:error, :econnrefused},
-                  SSHEx.connect(ip: 'localhost', port: 10_002,
+                  SSHEx.connect(ip: "127.0.0.1", port: 10_004,
                                 user: "test", password: "secret"))
     assert match?({:error, :econnrefused},
-                  SSHEx.connect(ip: 'localhost', port: 10_003,
+                  SSHEx.connect(ip: "127.0.0.1", port: 10_005,
                                 user: "test", password: "secret"))
   end
 
   test "allows command handler to be overridden" do
-    SSHEcho.start_daemon 10_004, "test", "secret", &("Hello #{&1}")
-    {:ok, conn} = SSHEx.connect(ip: 'localhost', port: 10_004,
+    SSHEcho.start_daemon 10_006, "test", "secret", &("Hello #{&1}")
+    {:ok, conn} = SSHEx.connect(ip: "127.0.0.1", port: 10_006,
                                 user: "test", password: "secret")
     response = conn
                |> SSHEx.stream("World")
